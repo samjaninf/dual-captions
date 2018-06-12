@@ -5,3 +5,7 @@
 .original-caption.translated {
   filter: opacity(1) !important;
 }
+
+.original-caption.removed {
+  filter: opacity(0) !important;
+}

@@ -5,6 +5,7 @@ class DualCaptions {
     this.secondLanguage = 'en';
     this.extraSpace = false;
     this.delayRenderingUntilTranslation = true;
+    this.hideOriginalCaption = true;
 
     window.chrome.runtime.onMessage.addListener(this._onMessage.bind(this));
   }
@@ -90,6 +91,9 @@ class DualCaptions {
           newCaption.classList.add('original-caption');
           if (!this.delayRenderingUntilTranslation) {
             newCaption.classList.add('translated');
+          }
+          if (this.hideOriginalCaption) {
+            newCaption.classList.add('removed');
           }
           window.DC.translate(this.lastCaption, {
             from: 'auto',
