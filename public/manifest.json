@@ -17,9 +17,7 @@
     ],
     "js": [
       "content-scripts/init.js",
-      "content-scripts/google-translate-token.js",
-      "content-scripts/querystring-encode.js",
-      "content-scripts/google-translate-api.js",
+      "content-scripts/translate.js",
       "content-scripts/config/init.js",
       "content-scripts/config/youtube.js",
       "content-scripts/dual-captions.js"
@@ -33,9 +31,7 @@
     ],
     "js": [
       "content-scripts/init.js",
-      "content-scripts/google-translate-token.js",
-      "content-scripts/querystring-encode.js",
-      "content-scripts/google-translate-api.js",
+      "content-scripts/translate.js",
       "content-scripts/config/init.js",
       "content-scripts/config/netflix.js",
       "content-scripts/dual-captions.js"

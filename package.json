@@ -6,6 +6,7 @@
     "chai": "^4.1.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "google-translate-api": "^2.3.0",
     "i18next": "9.0.1",
     "i18next-xhr-backend": "1.4.3",
     "react": "^16.0.0",
@@ -21,12 +22,19 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node_modules/browserify/bin/cmd.js public/test/translate.js -o public/content-scripts/translate.js && react-scripts build",
     "test": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**"],
-    "coverageReporters": ["text"]
+    "collectCoverageFrom": [
+      "src/**"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
+  },
+  "devDependencies": {
+    "browserify": "^16.2.2"
   }
 }
