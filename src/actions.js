@@ -1,32 +1,27 @@
-import { getActiveTabId } from './utils/chrome.js';
+import { getActiveTabId, sendMessageToActiveTab } from './utils/chrome.js';
 
 export function popupOpened() {
   return function (dispatch) {
     return new Promise((resolve, _) => {
-      getActiveTabId()
-        .then(tabId => {
-          return new Promise(_resolve => {
-            window.chrome.tabs.sendMessage(tabId, {
-              type: 'popup-opened'
-            }, _resolve);
+      sendMessageToActiveTab({
+        type: 'popup-opened'
+      })
+      .then(response => {
+        if (!response.ok && response.errorType) {
+          dispatch({
+            type: 'CHANGE_ERROR',
+            payload: {
+              hasError: true,
+              errorType: response.errorType
+            }
           });
-        })
-        .then(response => {
-          if (!response.ok && response.errorType) {
-            dispatch({
-              type: 'CHANGE_ERROR',
-              payload: {
-                hasError: true,
-                errorType: response.errorType
-              }
-            });
-          }
-          resolve();
-        })
-        .catch(() => {
-          console.log('actions: Can\'t get active tab ID, am I running locally?');
-          resolve();
-        });
+        }
+        resolve();
+      })
+      .catch(err => {
+        console.log(err);
+        resolve();
+      });
     });
   }
 }
@@ -34,28 +29,22 @@ export function popupOpened() {
 export function changeDCLanguage(language) {
   return function (dispatch) {
     return new Promise((resolve, _) => {
-      getActiveTabId()
-        .then(tabId => {
-          return new Promise(_resolve => {
-            window.chrome.tabs.sendMessage(tabId, {
-              type: 'change-language',
-              payload: language
-            }, _resolve);
-          });
-        })
-        .then(() => {
-          dispatch({
-            type: 'CHANGE_SECOND_LANGUAGE',
-            payload: language
-          });
-          resolve();
-        })
-        .catch(() => {
-          console.log(`actions: Can't get active tab ID, am I running locally?`);
-          // TODO - Dispatch 'error' action
-          // Unable to get active tab ID
-          resolve();
+      sendMessageToActiveTab({
+        type: 'change-language',
+        payload: language
+      })
+      .then(response => {
+        // TODO - Check for response.ok?
+        dispatch({
+          type: 'CHANGE_SECOND_LANGUAGE',
+          payload: language
         });
+        resolve();
+      })
+      .catch(err => {
+        console.log(err);
+        resolve();
+      });
     });
   }
 }
