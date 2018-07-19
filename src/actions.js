@@ -1,5 +1,22 @@
 import { getActiveTabId } from './utils/chrome.js';
 
+export function updateStoreFromStorage() {
+  return function (dispatch) {
+    return new Promise((resolve, _) => {
+      window.chrome.storage.local.get('__DC_store__', result => {
+        if (result.__DC_store__) {
+          const savedStore = JSON.parse(result.__DC_store__);
+          dispatch({
+            type: 'CHANGE_UI_LANGUAGE',
+            payload: savedStore.uiLanguage
+          })
+        }
+        resolve();
+      });
+    });
+  }
+}
+
 export function popupOpened() {
   return function (dispatch) {
     return new Promise((resolve, _) => {
