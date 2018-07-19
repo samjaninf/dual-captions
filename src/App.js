@@ -12,7 +12,7 @@ import MainPage from './components/MainPage.jsx';
 import SettingsPage from './components/SettingsPage.jsx';
 import ErrorPage from './components/ErrorPage.jsx';
 
-import { updateStoreFromDC, popupOpened, updateStoreFromStorage } from './actions';
+import { updateStoreFromDC, popupOpened, updateStoreFromStorage, updateStore } from './actions';
 
 const mapStateToProps = function(state) {
   return {...state};
@@ -25,8 +25,11 @@ const ErrorPageView = connect(mapStateToProps)(ErrorPage);
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(popupOpened());
+    this.props.dispatch(updateStore());
+    /**
     this.props.dispatch(updateStoreFromStorage())
       .then(this.props.dispatch(updateStoreFromDC()));
+      **/
   }
 
   _onUILanguageSelectChanged(e) {
