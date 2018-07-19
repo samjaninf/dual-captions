@@ -4,6 +4,7 @@ class DualCaptions {
     this.observer = new window.MutationObserver(this._onMutation.bind(this));
 
     // Settings
+    this.settingsAreDefault = true;
     this.secondLanguage = 'en';
     this.extraSpace = false;
     this.delayRenderingUntilTranslation = true;
@@ -21,6 +22,7 @@ class DualCaptions {
       break;
 
       case 'change-settings':
+      this.settingsAreDefault = false;
       this.extraSpace = message.payload.extraSpace;
       this.delayRenderingUntilTranslation = message.payload.delayRenderingUntilTranslation;
       this.colorSubtitleEnabled = message.payload.colorSubtitleEnabled;
@@ -39,6 +41,7 @@ class DualCaptions {
       case 'get-state':
       sendResponse({
         ok: true,
+        settingsAreDefault: this.settingsAreDefault,
         isOn: this.isOn,
         secondLanguage: this.secondLanguage,
         settings: {

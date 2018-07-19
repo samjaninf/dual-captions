@@ -9,7 +9,14 @@ export function updateStoreFromStorage() {
           dispatch({
             type: 'CHANGE_UI_LANGUAGE',
             payload: savedStore.uiLanguage
-          })
+          });
+          dispatch({
+            type: 'CHANGE_SETTINGS',
+            payload: {
+              colorSubtitleBackgroundColor: savedStore.settings.colorSubtitleBackgroundColor,
+              colorSubtitleTextColor: savedStore.settings.colorSubtitleTextColor
+            }
+          });
         }
         resolve();
       });
@@ -218,10 +225,12 @@ export function updateStoreFromDC() {
               type: 'CHANGE_SECOND_LANGUAGE',
               payload: dcState.secondLanguage
             });
-            dispatch({
-              type: 'CHANGE_SETTINGS',
-              payload: dcState.settings
-            });
+            if (!dcState.settingsAreDefault) {
+              dispatch({
+                type: 'CHANGE_SETTINGS',
+                payload: dcState.settings
+              });
+            }
           } else {
             dispatch({
               type: 'CHANGE_DC_ON',
