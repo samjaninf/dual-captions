@@ -30,6 +30,7 @@ class App extends Component {
     this.props.dispatch(updateStoreFromStorage())
       .then(this.props.dispatch(updateStoreFromDC()));
       **/
+    // TODO - send message -> background page - 'get-store'
   }
 
   _onUILanguageSelectChanged(e) {

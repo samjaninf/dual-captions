@@ -20,12 +20,9 @@ export const loggingMiddleware = store => next => action => {
 
 export const storageMiddleware = store => next => action => {
   let result = next(action);
-  console.debug('Middleware: Writing store to chrome.storage.');
-  if (window.chrome && window.chrome.storage) {
-    const currentState = store.getState();
-    window.chrome.storage.local.set({
-      '__DC_store__': JSON.stringify(currentState)
-    });
-  }
+  const currentState = store.getState();
+  const currentStateJson = JSON.stringify(currentState);
+  // TODO - Send message 'save-store-json' w/ message.payload = currentStateJson
+  // TODO - sendResponse callback - console.debug('Middleware: Wrote store to chrome.storage.');
   return result;
 }

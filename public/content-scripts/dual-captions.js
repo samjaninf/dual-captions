@@ -3,7 +3,7 @@ class DualCaptions {
     this.isOn = false;
     this.observer = new window.MutationObserver(this._onMutation.bind(this));
 
-    // Settings
+    // Default settings
     this.settingsAreDefault = true;
     this.secondLanguage = 'en';
     this.extraSpace = false;
@@ -12,7 +12,13 @@ class DualCaptions {
     this.colorSubtitleBackgroundColor = '#000000';
     this.colorSubtitleTextColor = '#FFFFFF';
 
+    this._getInitialState();
+
     window.chrome.runtime.onMessage.addListener(this._onMessage.bind(this));
+  }
+  _getInitialState() {
+    // TODO - Send message -> background page - 'get-store'
+    // TODO - onResponse callback - set settings
   }
   _onMessage(message, sender, sendResponse) {
     switch (message.type) {
